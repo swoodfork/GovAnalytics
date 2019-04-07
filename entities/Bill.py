@@ -29,6 +29,10 @@ class Bill:
         self.summary = []
         self.committee_reports = []
 
+    def get_args(self):
+        args = [self.session, self.bill_type, self.number, self.updated]
+        return args
+
     def add_state(self, value):
         self.state.append(value)
 
@@ -67,3 +71,7 @@ class Bill:
 
     def add_committee_report(self, value):
         self.committee_reports.append(value)
+
+    def key_info(self):
+        return 'Bill Info: Session {} -- Bill Type: {} -- number {}\n'\
+            .format(self.session, self.bill_type, self.number)

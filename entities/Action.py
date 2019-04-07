@@ -1,4 +1,4 @@
-from entities.Reference import *
+from GovAnalytics.entities.Reference import *
 
 
 class Action:
@@ -8,3 +8,8 @@ class Action:
         self.text = text
 
         self.Reference = Reference(ref, label)
+
+    def get_args(self, bill_id):
+        args = [bill_id, self.date, self.text, self.Reference.ref, self.Reference.label, None, None, None, None, None]
+        return args
+
