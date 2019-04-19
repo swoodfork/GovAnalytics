@@ -1,5 +1,6 @@
 /*
-Version 1.0 - Mod: Spencer Woodfork
+Version 1.0 - 1.2 - Mod: Spencer Woodfork
+Version 1.1 - Mod: Katie Ryan
 */
 
 /*
