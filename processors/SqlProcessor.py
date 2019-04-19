@@ -25,7 +25,6 @@ class SqlProcessor:
 
             for result in self.cursor.stored_results():
                 results.append(result.fetchall())
-
         except:
             print("Error occurred during mySQL Execution: ", sys.exc_info[0])
 
@@ -36,7 +35,7 @@ class SqlProcessor:
         result_set = self.execute_procedure('insert_bill', bill.get_args())
         bill_id = result_set[0][0][0]
 
-        print(bill.key_info())
+        print("Processing bill:  " + bill.key_info())
 
         if bill.state:
             for state in bill.state:
@@ -53,5 +52,17 @@ class SqlProcessor:
         if bill.actions:
             for action in bill.actions:
                 self.execute_procedure('insert_action', action.get_args(bill_id))
+
+        if bill.titles:
+            for title in bill.titles:
+                self.execute_procedure('insert_title', title.get_args(bill_id))
+
+        if bill.subjects:
+            for subject in bill.subjects:
+                self.execute_procedure('insert_subject', subject.get_args(bill_id))
+
+        if bill.summary:
+            for summary in bill.summary:
+                self.execute_procedure('insert_summary', summary.get_args(bill_id))
 
         self.database.commit()
