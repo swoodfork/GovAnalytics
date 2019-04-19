@@ -9,7 +9,7 @@ class Bill:
                   "sjres": "Senate Joint Resolution",
                   "sres": "Senate Simple Resolution"}
 
-    def __init__(self, session, bill_type, number, updated):
+    def __init__(self, session, bill_type, number, updated, path):
         self.session = session
         self.bill_type = bill_type
         self.number = number
@@ -28,6 +28,8 @@ class Bill:
         self.amendments = []
         self.summary = []
         self.committee_reports = []
+
+        self.path = path
 
     def get_args(self):
         args = [self.session, self.bill_type, self.number, self.updated]
@@ -73,5 +75,5 @@ class Bill:
         self.committee_reports.append(value)
 
     def key_info(self):
-        return 'Bill Info: Session {} -- Bill Type: {} -- number {}\n'\
+        return 'Session: {} -- Bill Type: {} -- number: {}\n'\
             .format(self.session, self.bill_type, self.number)
