@@ -1,11 +1,12 @@
-from GovAnalytics.processors.XmlProcessor import XmlProcessor
+from GovAnalytics.processors.JsonProcessor import JsonProcessor
 from GovAnalytics.processors.SqlProcessor import SqlProcessor
 
-path = "D:\CongressData\congress\data"
+
+path = "D:\CongressData"
 
 processor = SqlProcessor()
 
-all_bills = XmlProcessor.get_all_bills(path)
+all_bills = JsonProcessor.get_all_bills(path)
 
 for bill in all_bills:
     processor.insert_bill(bill)
