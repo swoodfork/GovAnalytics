@@ -92,7 +92,7 @@ CREATE TABLE summary(
 	bill_id INT,
     date DATE,
     status VARCHAR(100),
-    text VARCHAR(5000),
+    text TEXT,
     INDEX (bill_id),
     FOREIGN KEY (bill_id)
 		REFERENCES bill(bill_id)
@@ -208,7 +208,7 @@ END
 
 # Switch delimiter to //, so query will execute line by line.
 DELIMITER //
-CREATE PROCEDURE insert_summary (IN bill_id INT, IN date DATE, IN status VARCHAR(100), IN text VARCHAR(5000))
+CREATE PROCEDURE insert_summary (IN bill_id INT, IN date DATE, IN status VARCHAR(100), IN text TEXT)
 BEGIN
 	INSERT INTO summary (bill_id, date, status, text) values (bill_id, date, status, text);
 END
