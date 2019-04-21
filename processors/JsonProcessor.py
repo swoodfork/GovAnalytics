@@ -93,7 +93,7 @@ class JsonProcessor:
                         ref = x['references'][0]['reference']
                         label = x['references'][0]['type']
 
-                if x['type'] == 'action':
+                if x['type'] != 'vote':
                     action = Action(date, text, ref, label)
                 elif x['type'] == 'vote':
                     how = ''
