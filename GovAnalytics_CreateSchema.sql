@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS summary(
 ) ENGINE=InnoDB;
 
 CREATE TABLE History (
-	Year INT,
+	Year YEAR,
 	Pres_Party VARCHAR(20),
     Majority_House_Party VARCHAR(20),
     House_D_Net_Change INT,
@@ -116,8 +116,9 @@ CREATE TABLE History (
     Senate_D_Total_Seat INT,
     Senate_R_Total_Seat INT,
     Senate_Ind_Total_Seat INT,
+    INDEX (Year),
     PRIMARY KEY (Year)
-);
+) ENGINE=InnoDB;
 
 /*
 VIEW CREATION
@@ -198,6 +199,8 @@ CREATE PROCEDURE insert_summary (IN bill_id INT, IN date DATE, IN status VARCHAR
 BEGIN
 	INSERT INTO summary (bill_id, date, status, text) values (bill_id, date, status, text);
 END;
+
+
 
 /*
 DEFAULT DATA:
