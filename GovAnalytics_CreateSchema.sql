@@ -11,7 +11,7 @@ TABLE CREATION
 */
 DROP TABLE IF EXISTS history;
 
-CREATE TABLE bill (
+CREATE TABLE IF NOT EXISTS bill (
 	bill_id INT NOT NULL AUTO_INCREMENT,
 	session INT,
 	type VARCHAR(100),
@@ -20,7 +20,7 @@ CREATE TABLE bill (
     PRIMARY KEY (bill_id)
 );
 
-CREATE TABLE state(
+CREATE TABLE IF NOT EXISTS state(
 	bill_id INT,
     state VARCHAR(100),
     date DATE,
@@ -30,7 +30,7 @@ CREATE TABLE state(
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE sponsor(
+CREATE TABLE IF NOT EXISTS sponsor(
 	bill_id INT,
     name VARCHAR(100),
     party VARCHAR(100),
@@ -41,7 +41,7 @@ CREATE TABLE sponsor(
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE cosponsor(
+CREATE TABLE IF NOT EXISTS cosponsor(
 	bill_id INT,
     name VARCHAR(100),
     party VARCHAR(100),
@@ -53,7 +53,7 @@ CREATE TABLE cosponsor(
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE action(
+CREATE TABLE IF NOT EXISTS action(
 	bill_id INT,
     date DATE,
     text VARCHAR(5000),
@@ -70,7 +70,7 @@ CREATE TABLE action(
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE title(
+CREATE TABLE IF NOT EXISTS title(
 	bill_id INT,
     type VARCHAR(100),
     title_as VARCHAR(100),
@@ -81,7 +81,7 @@ CREATE TABLE title(
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE subject(
+CREATE TABLE IF NOT EXISTS subject(
 	bill_id INT,
     name VARCHAR(1000),
     INDEX (bill_id),
@@ -90,7 +90,7 @@ CREATE TABLE subject(
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
-CREATE TABLE summary(
+CREATE TABLE IF NOT EXISTS summary(
 	bill_id INT,
     date DATE,
     status VARCHAR(100),
