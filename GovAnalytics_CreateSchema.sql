@@ -274,7 +274,7 @@ DROP PROCEDURE IF EXISTS insert_summary;
 DROP PROCEDURE IF EXISTS insert_committee;
 DROP PROCEDURE IF EXISTS insert_legislator;
 DROP PROCEDURE IF EXISTS insert_term;
-DROP PROCEDURE legislator_count;
+DROP PROCEDURE IF EXISTS legislator_count;
 
 DELIMITER //
 CREATE PROCEDURE insert_bill (IN session INT, IN type VARCHAR(100), IN number INT, IN introduced DATE, IN updated DATE)
