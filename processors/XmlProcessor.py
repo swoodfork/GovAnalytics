@@ -1,7 +1,7 @@
 import os
-from glob import glob
 import datetime
 import xml.etree.ElementTree as eTree
+from glob import glob
 from GovAnalytics.entities import *
 
 
@@ -65,8 +65,7 @@ class XmlProcessor:
 
         if e_map.__contains__("introduced"):
             x = root[e_map["introduced"]]
-            introduced = Introduced(x.attrib["datetime"])
-            bill.add_introduced(introduced)
+            bill.introduced = x.attrib["datetime"]
 
         if e_map.__contains__("state"):
             x = root[e_map["state"]]
@@ -104,7 +103,7 @@ class XmlProcessor:
 
         if e_map.__contains__("actions"):
             for x in root[e_map["actions"]]:
-                date = date_formatter(x.attrib["datetime"])
+                date = date_formatter(x["datetime"])
                 text = ""
                 ref = ""
                 label = ""
