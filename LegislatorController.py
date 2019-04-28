@@ -2,14 +2,13 @@ from GovAnalytics.processors.JsonProcessor import JsonProcessor
 from GovAnalytics.processors.SqlProcessor import SqlProcessor
 from GovAnalytics.PathConstants import *
 
-
 processor = SqlProcessor()
 
-all_bills = JsonProcessor.get_all_bills(PathConstants.BILL_ROOT)
+all_legislators = JsonProcessor.get_all_legislators(PathConstants.LEGISLATOR_ROOT)
 
-processor.load_counter("Bill", len(all_bills))
+processor.load_counter("Legislator", len(all_legislators))
 
-for bill in all_bills:
-    processor.insert_bill(bill)
+for legislator in all_legislators:
+    processor.insert_legislator(legislator)
 
 processor.report()
