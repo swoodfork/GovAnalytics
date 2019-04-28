@@ -274,6 +274,7 @@ DROP PROCEDURE IF EXISTS insert_summary;
 DROP PROCEDURE IF EXISTS insert_committee;
 DROP PROCEDURE IF EXISTS insert_legislator;
 DROP PROCEDURE IF EXISTS insert_term;
+DROP PROCEDURE legislator_count;
 
 DELIMITER //
 CREATE PROCEDURE insert_bill (IN session INT, IN type VARCHAR(100), IN number INT, IN introduced DATE, IN updated DATE)
@@ -393,14 +394,9 @@ END;
 CREATE PROCEDURE insert_legislator (IN bioguide VARCHAR(10), IN thomas VARCHAR(10), IN govtrack INT, IN icpsr INT, IN house_history INT, IN first VARCHAR(50),
 	IN middle VARCHAR(50), IN last VARCHAR(50), IN birthday DATE, IN gender CHAR(10))
 BEGIN
-    IF (SELECT COUNT(*) FROM bill b where b.session = session AND b.type = type AND b.number = number) = 0
-    THEN
-        INSERT INTO legislator (bioguide, thomas, govtrack, icpsr, house_history, first, middle, last, birthday, gender)
-        values (bioguide, thomas, govtrack, icpsr, house_history, first, middle, last, birthday, gender);
-        SELECT MAX(legislator_ID) FROM legislator;
-	ELSE
-		SELECT -1;
-    END IF;
+	INSERT INTO legislator (bioguide, thomas, govtrack, icpsr, house_history, first, middle, last, birthday, gender)
+	values (bioguide, thomas, govtrack, icpsr, house_history, first, middle, last, birthday, gender);
+	SELECT MAX(legislator_ID) FROM legislator;
 END;
 
 CREATE PROCEDURE insert_term (IN legislator_id INT, IN type VARCHAR(10), IN start DATE, IN end DATE, IN state VARCHAR(50), IN class INT, IN district INT, IN party VARCHAR(50))
@@ -408,6 +404,10 @@ BEGIN
 	INSERT INTO term (legislator_id, type, start, end, state, class, district, party) values (legislator_id, type, start, end, state, class, district, party);
 END;
 
+CREATE PROCEDURE legislator_count()
+BEGIN
+	SELECT COUNT(*) FROM legislator;
+END;
 
 /*
 CREATE FUNCTIONS
@@ -535,6 +535,7 @@ DROP PROCEDURE insert_summary;
 DROP PROCEDURE insert_committee
 DROP PROCEDURE insert_legislator;
 DROP PROCEDURE insert_term;
+DROP PROCEDURE legislator_count;
 
 DROP FUNCTION IF EXISTS legislator_full_name;
 */
