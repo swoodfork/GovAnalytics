@@ -3,11 +3,10 @@ from GovAnalytics.entities.Sponsor import *
 
 class Cosponsor(Sponsor):
 
-    def __init__(self, bio_id, joined):
-        super().__init__(bio_id)
-
+    def __init__(self, bioguide, thomas, govtrack, joined):
+        super().__init__(bioguide, thomas, govtrack)
         self.joined = joined
 
     def get_args(self, bill_id):
-        args = [bill_id, self.name, self.party, self.state, self.joined]
+        args = [bill_id, self.bioguide, self.thomas, self.govtrack, self.joined]
         return args

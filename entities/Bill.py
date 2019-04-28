@@ -1,3 +1,8 @@
+import os
+import shutil
+from GovAnalytics.PathConstants import *
+
+
 class Bill:
 
     BILL_TYPES = {"hconres": "House Concurrent Resolution",
@@ -9,15 +14,16 @@ class Bill:
                   "sjres": "Senate Joint Resolution",
                   "sres": "Senate Simple Resolution"}
 
-    def __init__(self, session, bill_type, number, updated, path):
+    def __init__(self, session, bill_type, number, introduced, updated, path):
         self.session = session
         self.bill_type = bill_type
         self.number = number
+        self.introduced = introduced
         self.updated = updated
+        self.path = path
 
         self.state = []
         self.status = []
-        self.introduced = []
         self.titles = []
         self.sponsors = []
         self.cosponsors = []
@@ -29,10 +35,8 @@ class Bill:
         self.summary = []
         self.committee_reports = []
 
-        self.path = path
-
     def get_args(self):
-        args = [self.session, self.bill_type, self.number, self.updated]
+        args = [self.session, self.bill_type, self.number, self.introduced, self.updated]
         return args
 
     def add_state(self, value):
@@ -40,9 +44,6 @@ class Bill:
 
     def add_status(self, value):
         self.status.append(value)
-
-    def add_introduced(self, value):
-        self.introduced.append(value)
 
     def add_title(self, value):
         self.titles.append(value)
@@ -77,3 +78,12 @@ class Bill:
     def key_info(self):
         return 'Session: {} -- Bill Type: {} -- number: {}\n'\
             .format(self.session, self.bill_type, self.number)
+
+    def directory_name(self):
+        return 'session_{}_type_{}_number_{}'.format(self.session, self.bill_type, self.number)
+
+    def preserve_bill_failure(self):
+        directory = "{}\\{}".format(PathConstants.BILL_FAILURE, self.directory_name())
+        os.makedirs(directory, exist_ok=True)
+        shutil.copyfile(self.path, "{}\\data.json".format(directory))
+        print("Bill successfully copied to location:\n  {}".format(directory))
