@@ -24,10 +24,13 @@ class SqlProcessor:
             database=MySqlSessionInfo.DATABASE
         )
 
-    def execute_procedure(self, procedure, args):
+    def execute_procedure(self, procedure, args=None):
         results = []
 
-        self.cursor.callproc(procedure, args)
+        if args:
+            self.cursor.callproc(procedure, args)
+        else:
+            self.cursor.callproc(procedure)
 
         for result in self.cursor.stored_results():
             results.append(result.fetchall())
@@ -93,6 +96,12 @@ class SqlProcessor:
         result_set = self.execute_procedure('insert_legislator', legislator.get_args())
         legislator_id = result_set[0][0][0]
 
+        if legislator_id == -1:
+            print("Legislator Already Processed: " + legislator.key_info())
+            self.database.commit()
+            self.increment(2)
+            return
+
         self.print_status()
 
         if legislator.terms:
@@ -101,6 +110,10 @@ class SqlProcessor:
 
         self.database.commit()
         self.increment()
+
+    def get_count_legislators(self):
+        existing_legislators = self.execute_procedure('legislator_count')
+        return existing_legislators[0][0][0]
 
     def load_counter(self, name, total):
         self.object_name = name
