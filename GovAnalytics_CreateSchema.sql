@@ -11,6 +11,36 @@ TABLE CREATION
 */
 DROP TABLE IF EXISTS history;
 
+CREATE TABLE IF NOT EXISTS legislator (
+	legislator_id INT NOT NULL AUTO_INCREMENT,
+	bioguide VARCHAR(10),
+    thomas VARCHAR(10),
+	govtrack INT,
+    icpsr INT,
+    house_history INT,
+    first VARCHAR(50),
+    middle VARCHAR(50),
+    last VARCHAR(50),
+    birthday DATE,
+    gender CHAR(10),
+    PRIMARY KEY (legislator_id)
+);
+
+CREATE TABLE IF NOT EXISTS term(
+	legislator_id INT,
+    type VARCHAR(10),
+    start DATE,
+    end DATE,
+    state VARCHAR(50),
+    class INT,
+    district INT,
+    party VARCHAR(50),
+    INDEX (legislator_id),
+    FOREIGN KEY (legislator_id)
+		REFERENCES legislator(legislator_id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS bill (
 	bill_id INT NOT NULL AUTO_INCREMENT,
 	session INT,
@@ -122,36 +152,6 @@ CREATE TABLE IF NOT EXISTS committee(
     INDEX (bill_id),
     FOREIGN KEY (bill_id)
 		REFERENCES bill(bill_id)
-        ON DELETE CASCADE
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS legislator (
-	legislator_id INT NOT NULL AUTO_INCREMENT,
-	bioguide VARCHAR(10),
-    thomas VARCHAR(10),
-	govtrack INT,
-    icpsr INT,
-    house_history INT,
-    first VARCHAR(50),
-    middle VARCHAR(50),
-    last VARCHAR(50),
-    birthday DATE,
-    gender CHAR(10),
-    PRIMARY KEY (legislator_id)
-);
-
-CREATE TABLE IF NOT EXISTS term(
-	legislator_id INT,
-    type VARCHAR(10),
-    start DATE,
-    end DATE,
-    state VARCHAR(50),
-    class INT,
-    district INT,
-    party VARCHAR(50),
-    INDEX (legislator_id),
-    FOREIGN KEY (legislator_id)
-		REFERENCES legislator(legislator_id)
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
@@ -517,12 +517,6 @@ DROP TABLE IF EXISTS bill;
 
 DROP TABLE IF EXISTS term;
 DROP TABLE IF EXISTS legislator;
-
-
-DROP VIEW IF EXISTS bill_summary;
-DROP VIEW IF EXISTS bill_summary_ind;
-DROP VIEW IF EXISTS bill_cosponsor;
-
 
 
 DROP PROCEDURE insert_subject;
