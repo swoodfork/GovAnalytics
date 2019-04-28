@@ -58,18 +58,19 @@ class JsonProcessor:
 
         if data.__contains__('sponsor'):
             x = data['sponsor']
-            bioguide = None
-            thomas = None
-            govtrack = None
-            if x.__contains__('bioguide_id'):
-                bioguide = x['bioguide_id']
-            if x.__contains__('thomas_id'):
-                thomas = x['thomas_id']
-            if x.__contains__('govtrack'):
-                govtrack = x['govtrack']
+            if x:
+                bioguide = None
+                thomas = None
+                govtrack = None
+                if x.__contains__('bioguide_id'):
+                    bioguide = x['bioguide_id']
+                if x.__contains__('thomas_id'):
+                    thomas = x['thomas_id']
+                if x.__contains__('govtrack'):
+                    govtrack = x['govtrack']
 
-            sponsor = Sponsor(bioguide, thomas, govtrack)
-            bill.add_sponsor(sponsor)
+                sponsor = Sponsor(bioguide, thomas, govtrack)
+                bill.add_sponsor(sponsor)
 
         if data.__contains__('cosponsors'):
             for x in data['cosponsors']:
