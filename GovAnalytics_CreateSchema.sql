@@ -103,9 +103,9 @@ CREATE TABLE IF NOT EXISTS action(
     location VARCHAR(100),
     result VARCHAR(100),
     state VARCHAR(100),
-    committee VARCHAR(400),
-    in_committee VARCHAR(400),
-    subcommittee VARCHAR(400),
+    committee VARCHAR(1000),
+    in_committee VARCHAR(1000),
+    subcommittee VARCHAR(1000),
 	INDEX (bill_id),
     FOREIGN KEY (bill_id)
 		REFERENCES bill(bill_id)
@@ -293,7 +293,7 @@ BEGIN
 END;
 
 CREATE PROCEDURE insert_action (IN bill_id INT, IN date DATE, IN text VARCHAR(5000), IN ref VARCHAR(500), IN label VARCHAR(100), IN how VARCHAR(100),
-	IN type VARCHAR(100), IN location VARCHAR(100), IN result VARCHAR(100), IN state VARCHAR(100), IN committee VARCHAR(400), IN in_committee VARCHAR(400), IN subcommittee VARCHAR(400))
+	IN type VARCHAR(100), IN location VARCHAR(100), IN result VARCHAR(100), IN state VARCHAR(100), IN committee VARCHAR(1000), IN in_committee VARCHAR(1000), IN subcommittee VARCHAR(1000))
 BEGIN
 	INSERT INTO action (bill_id, date, text, ref, label, how, type, location, result, state, committee, in_committee, subcommittee)
     values (bill_id, date, text, ref, label, how, type, location, result, state, committee, in_committee, subcommittee);
@@ -393,9 +393,14 @@ END;
 CREATE PROCEDURE insert_legislator (IN bioguide VARCHAR(10), IN thomas VARCHAR(10), IN govtrack INT, IN icpsr INT, IN house_history INT, IN first VARCHAR(50),
 	IN middle VARCHAR(50), IN last VARCHAR(50), IN birthday DATE, IN gender CHAR(10))
 BEGIN
-	INSERT INTO legislator (bioguide, thomas, govtrack, icpsr, house_history, first, middle, last, birthday, gender)
-    values (bioguide, thomas, govtrack, icpsr, house_history, first, middle, last, birthday, gender);
-    SELECT MAX(legislator_ID) FROM legislator;
+    IF (SELECT COUNT(*) FROM bill b where b.session = session AND b.type = type AND b.number = number) = 0
+    THEN
+        INSERT INTO legislator (bioguide, thomas, govtrack, icpsr, house_history, first, middle, last, birthday, gender)
+        values (bioguide, thomas, govtrack, icpsr, house_history, first, middle, last, birthday, gender);
+        SELECT MAX(legislator_ID) FROM legislator;
+	ELSE
+		SELECT -1;
+    END IF;
 END;
 
 CREATE PROCEDURE insert_term (IN legislator_id INT, IN type VARCHAR(10), IN start DATE, IN end DATE, IN state VARCHAR(50), IN class INT, IN district INT, IN party VARCHAR(50))
