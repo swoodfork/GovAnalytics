@@ -201,6 +201,7 @@ inner join history hist on hist.year = year(st.date);
 
 CREATE VIEW bill_summary_ind
 AS
+
 SELECT b.bill_id AS bill_id
 
 ,b.session AS session
@@ -221,11 +222,11 @@ SELECT b.bill_id AS bill_id
 
 ,(case when ((trim(s.party) = 'Republican') and (hist.Majority_Senate_Party = 'Republican')) then 1 when ((trim(s.party) = 'Democratic') and (hist.Majority_Senate_Party = 'Democrat')) then 1 else 0 end) AS Senate_Party_Match
 
-,(case when (trim(s.party) = 'Republican') then (hist.Senate_R_Total_Seat / 100) when (trim(s.party) = 'Democratic') then (hist.Senate_D_Total_Seat / 100) when (trim(s.party) = 'Independent') then (hist.Senate_Ind_Total_Seat / 100) else NULL end) AS Prcnt_Senators_In_Same_Party
+,(case when (trim(s.party) = 'Republican') then (hist.Senate_R_Total_Seat / 100) when (trim(s.party) = 'Democrat') then (hist.Senate_D_Total_Seat / 100) when (trim(s.party) = 'Independent') then (hist.Senate_Ind_Total_Seat / 100) else NULL end) AS Prcnt_Senators_In_Same_Party
 
-,(case when ((trim(s.party) = 'Republican') and (hist.Majority_House_Party = 'Republican')) then 1 when ((trim(s.party) = 'Democratic') and (hist.Majority_House_Party = 'Democrat')) then 1 else 0 end) AS HouseOfR_Party_Match
+,(case when ((trim(s.party) = 'Republican') and (hist.Majority_House_Party = 'Republican')) then 1 when ((trim(s.party) = 'Democrat') and (hist.Majority_House_Party = 'Democrat')) then 1 else 0 end) AS HouseOfR_Party_Match
 
-,(case when (trim(s.party) = 'Republican') then (hist.House_R_Total_Seat / 435) when (trim(s.party) = 'Democratic') then (hist.House_D_Total_Seat / 435) when (trim(s.party) = 'Independent') then (hist.House_Ind_Total_Seat / 435) else NULL end) AS Prcnt_HouseOfR_In_Same_Party
+,(case when (trim(s.party) = 'Republican') then (hist.House_R_Total_Seat / 435) when (trim(s.party) = 'Democrat') then (hist.House_D_Total_Seat / 435) when (trim(s.party) = 'Independent') then (hist.House_Ind_Total_Seat / 435) else NULL end) AS Prcnt_HouseOfR_In_Same_Party
 
 from (((bill b join sponsor s
 
@@ -238,7 +239,6 @@ on((b.bill_id = st.bill_id)))
 join history hist
 
 on((hist.Year = year(st.date))));
-
 
 
 CREATE VIEW bill_cosponsor
