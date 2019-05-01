@@ -213,7 +213,7 @@ SELECT b.bill_id AS bill_id
 
 ,st.state AS state
 
-,(case when (st.state in ('ENACTED:SIGNED','PASSED:BILL','PASSED:CONCURRENTRES','PASSED:SIMPLERES')) then 1 else 0 end) AS Pass_Ind
+,(case when (st.state in ('ENACTED:SIGNED','PASSED:BILL','PASSED:CONCURRENTRES','PASSED:SIMPLERES','ENACTED:VETO_OVERRIDE')) then 1 else 0 end) AS Pass_Ind
 
 ,st.date AS date
 
