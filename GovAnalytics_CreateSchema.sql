@@ -249,9 +249,9 @@ SELECT bill_id
 
 , sum(case when party = "Republican" then 1 else 0 end) as Rep_Count
 
-, sum(case when party = "Democratic" then 1 else 0 end) as Dec_Count
+, sum(case when party = "Democrat" then 1 else 0 end) as Dec_Count
 
-, abs(sum(case when party = "Republican" then 1 else 0 end) - sum(case when party = "Democratic" then 1 else 0 end))/count(1) as Partisan_ind
+, abs(sum(case when party = "Republican" then 1 else 0 end) - sum(case when party = "Democrat" then 1 else 0 end))/count(1) as CS_Partisan_ind
 
  from cosponsor
 
